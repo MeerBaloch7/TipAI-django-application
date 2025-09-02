@@ -39,5 +39,20 @@ pip install ipykernel
 5. save the model using joblib
 
 
+I have saved the model as `xgb_model.pkl` in the `model` directory.
+> you can see the procedure of ml training and saving a model in this [notebook](./ml_project/01_ml.ipynb)
 
 
+## 4. create a django project
+
+```bash
+# starting the project in the same main folder
+django-admin startproject tip_predictor .
+```
+
+## 5. create a django app
+
+```bash
+cd tip_predictor
+python manage.py startapp predictor
+```
