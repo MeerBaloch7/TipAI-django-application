@@ -1,1 +1,2 @@
-web: cd tip_predictor && python manage.py migrate && python manage.py runserver 0.0.0.0:$PORT
+release: bash release.sh
+web: cd tip_predictor && gunicorn tip_predictor.wsgi --log-file -
