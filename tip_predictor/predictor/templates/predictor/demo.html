@@ -1,0 +1,152 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}Demo - TipAI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Header Section -->
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-4 text-white mb-3">
+            <i class="fas fa-play-circle icon-feature"></i>
+            Live Demo
+        </h1>
+        <p class="lead text-white">
+            See TipAI in action with real-world dining scenarios
+        </p>
+    </div>
+</div>
+
+<!-- Sample Predictions -->
+<div class="row g-4">
+    {% for sample in sample_predictions %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card feature-card h-100">
+            <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h5 class="mb-0">
+                    <i class="fas fa-utensils me-2"></i>
+                    {{ sample.scenario }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <h6 class="mb-3">Dining Details:</h6>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-receipt text-primary me-2"></i> <strong>Bill:</strong> ${{ sample.details.total_bill }}</li>
+                    <li><i class="fas fa-users text-success me-2"></i> <strong>Party Size:</strong> {{ sample.details.size }}</li>
+                    <li><i class="fas fa-user text-info me-2"></i> <strong>Gender:</strong> {{ sample.details.sex }}</li>
+                    <li><i class="fas fa-smoking text-warning me-2"></i> <strong>Smoker:</strong> {{ sample.details.smoker }}</li>
+                    <li><i class="fas fa-calendar text-danger me-2"></i> <strong>Day:</strong> {{ sample.details.day }}</li>
+                    <li><i class="fas fa-clock text-secondary me-2"></i> <strong>Time:</strong> {{ sample.details.time }}</li>
+                </ul>
+                
+                <hr>
+                
+                <div class="text-center">
+                    <h6 class="text-muted">AI Prediction</h6>
+                    <h3 class="text-primary">${{ sample.predicted_tip }}</h3>
+                    <small class="text-success">{{ sample.tip_percentage }}% of bill</small>
+                </div>
+            </div>
+            <div class="card-footer bg-light text-center">
+                <small class="text-muted">
+                    <i class="fas fa-robot me-1"></i>
+                    Powered by XGBoost ML
+                </small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Interactive Demo Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center p-5">
+                <h3 class="mb-4">
+                    <i class="fas fa-hands-helping text-primary me-2"></i>
+                    Try It Yourself
+                </h3>
+                <p class="lead text-muted mb-4">
+                    Ready to get your own personalized tip prediction? 
+                    Use our interactive form with your dining details.
+                </p>
+                <a href="{% url 'predictor:predict' %}" class="btn btn-primary btn-lg px-5 py-3">
+                    <i class="fas fa-magic me-2"></i>
+                    Make Your Prediction
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How Demo Works -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white text-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    About These Demo Predictions
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Real Data Processing</h5>
+                        <p>Each demo scenario uses the same XGBoost machine learning model that powers our live predictions. The model processes:</p>
+                        <ul>
+                            <li>Bill amount normalization</li>
+                            <li>Categorical variable encoding</li>
+                            <li>Feature importance weighting</li>
+                            <li>Gradient boosting optimization</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Prediction Accuracy</h5>
+                        <p>Our model achieves high accuracy by considering multiple factors:</p>
+                        <ul>
+                            <li>Historical tipping patterns</li>
+                            <li>Customer demographic insights</li>
+                            <li>Service timing influences</li>
+                            <li>Social and cultural factors</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-light mt-4">
+                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                    <strong>Note:</strong> These predictions are estimates based on historical data and should be used as guidelines. Personal preferences and service quality should also be considered when determining final tip amounts.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation to other sections -->
+<div class="row mt-5">
+    <div class="col-md-6 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-cogs mb-3" style="font-size: 3rem; opacity: 0.7;"></i>
+                <h5>Learn How It Works</h5>
+                <p class="mb-3">Discover the technology behind our predictions</p>
+                <a href="{% url 'predictor:how_it_works' %}" class="btn btn-outline-light">
+                    <i class="fas fa-arrow-right me-1"></i> Explore
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-info-circle mb-3" style="font-size: 3rem; opacity: 0.7;"></i>
+                <h5>About TipAI</h5>
+                <p class="mb-3">Learn more about our mission and technology</p>
+                <a href="{% url 'predictor:about' %}" class="btn btn-outline-light">
+                    <i class="fas fa-arrow-right me-1"></i> Read More
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

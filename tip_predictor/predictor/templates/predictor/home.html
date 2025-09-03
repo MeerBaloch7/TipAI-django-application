@@ -1,17 +1,17 @@
 {% extends 'predictor/base.html' %}
 
-{% block title %}Tip Predictor - AI-Powered Tip Estimation{% endblock %}
+{% block title %}Predict Tips - TipAI{% endblock %}
 
 {% block content %}
 <div class="row">
-    <!-- Hero Section -->
+    <!-- Header Section -->
     <div class="col-12 text-center mb-5">
         <h1 class="display-4 text-white mb-3">
-            <i class="fas fa-brain icon-feature"></i>
-            Smart Tip Predictor
+            <i class="fas fa-magic icon-feature"></i>
+            Tip Prediction Engine
         </h1>
         <p class="lead text-white">
-            Get accurate tip predictions using advanced machine learning algorithms
+            Enter your dining details below and let AI predict the perfect tip amount
         </p>
     </div>
 </div>
@@ -20,111 +20,125 @@
     <!-- Prediction Form -->
     <div class="col-lg-8 col-md-10">
         <div class="card">
-            <div class="card-header bg-primary text-white text-center">
+            <div class="card-header bg-gradient text-white text-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                 <h3 class="mb-0">
-                    <i class="fas fa-calculator"></i>
-                    Enter Meal Details
+                    <i class="fas fa-utensils me-2"></i>
+                    Dining Details
                 </h3>
+                <p class="mb-0 mt-2 opacity-75">Fill in the information about your meal</p>
             </div>
             <div class="card-body p-4">
-                <form method="post">
+                <form method="post" id="tipPredictionForm">
                     {% csrf_token %}
                     
                     <div class="row">
                         <!-- Total Bill -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.total_bill.id_for_label }}" class="form-label">
-                                <i class="fas fa-dollar-sign text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.total_bill.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-receipt text-primary me-2"></i>
                                 {{ form.total_bill.label }}
                             </label>
                             {{ form.total_bill }}
                             {% if form.total_bill.errors %}
                                 <div class="text-danger small">{{ form.total_bill.errors }}</div>
                             {% endif %}
+                            <div class="form-text">Enter the total bill amount before tip</div>
                         </div>
 
                         <!-- Party Size -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.size.id_for_label }}" class="form-label">
-                                <i class="fas fa-users text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.size.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-users text-success me-2"></i>
                                 {{ form.size.label }}
                             </label>
                             {{ form.size }}
                             {% if form.size.errors %}
                                 <div class="text-danger small">{{ form.size.errors }}</div>
                             {% endif %}
+                            <div class="form-text">Number of people in your party</div>
                         </div>
 
                         <!-- Gender -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.sex.id_for_label }}" class="form-label">
-                                <i class="fas fa-user text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.sex.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user text-info me-2"></i>
                                 {{ form.sex.label }}
                             </label>
                             {{ form.sex }}
                             {% if form.sex.errors %}
                                 <div class="text-danger small">{{ form.sex.errors }}</div>
                             {% endif %}
+                            <div class="form-text">Primary customer gender</div>
                         </div>
 
                         <!-- Smoker -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.smoker.id_for_label }}" class="form-label">
-                                <i class="fas fa-smoking text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.smoker.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-smoking text-warning me-2"></i>
                                 {{ form.smoker.label }}
                             </label>
                             {{ form.smoker }}
                             {% if form.smoker.errors %}
                                 <div class="text-danger small">{{ form.smoker.errors }}</div>
                             {% endif %}
+                            <div class="form-text">Do you smoke?</div>
                         </div>
 
                         <!-- Day -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.day.id_for_label }}" class="form-label">
-                                <i class="fas fa-calendar text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.day.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-calendar-day text-danger me-2"></i>
                                 {{ form.day.label }}
                             </label>
                             {{ form.day }}
                             {% if form.day.errors %}
                                 <div class="text-danger small">{{ form.day.errors }}</div>
                             {% endif %}
+                            <div class="form-text">What day are you dining?</div>
                         </div>
 
                         <!-- Time -->
-                        <div class="col-md-6 mb-3">
-                            <label for="{{ form.time.id_for_label }}" class="form-label">
-                                <i class="fas fa-clock text-primary"></i>
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.time.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-clock text-secondary me-2"></i>
                                 {{ form.time.label }}
                             </label>
                             {{ form.time }}
                             {% if form.time.errors %}
                                 <div class="text-danger small">{{ form.time.errors }}</div>
                             {% endif %}
+                            <div class="form-text">Lunch or dinner service?</div>
                         </div>
                     </div>
 
-                    <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-magic"></i>
-                            Predict Tip Amount
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-lg px-5 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-weight: 600;">
+                            <i class="fas fa-brain me-2"></i>
+                            Generate AI Prediction
                         </button>
                     </div>
                 </form>
 
                 <!-- Prediction Result -->
                 {% if prediction %}
-                <div class="prediction-result">
-                    <h4>
-                        <i class="fas fa-star"></i>
-                        Predicted Tip Amount
-                    </h4>
-                    <h2 class="display-4 mb-0">
-                        <strong>${{ prediction }}</strong>
-                    </h2>
-                    <p class="mt-2 mb-0">
-                        Based on machine learning analysis of similar dining experiences
-                    </p>
+                <div class="prediction-result mt-5" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 15px; color: white; padding: 30px; text-align: center; animation: fadeInUp 0.8s ease-out;">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <i class="fas fa-trophy" style="font-size: 4rem; opacity: 0.7;"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="mb-3">
+                                <i class="fas fa-sparkles me-2"></i>
+                                AI Prediction Result
+                            </h3>
+                            <h1 class="display-3 fw-bold mb-2">
+                                ${{ prediction }}
+                            </h1>
+                            <p class="lead mb-0">
+                                Recommended tip amount based on machine learning analysis
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -132,33 +146,43 @@
     </div>
 </div>
 
-<!-- Features Section -->
+<!-- Quick Tips Section -->
 <div class="row mt-5">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="text-center mb-4">Why Use Our Tip Predictor?</h3>
+                <h4 class="text-center mb-4">
+                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                    Smart Tipping Tips
+                </h4>
                 <div class="row text-center">
-                    <div class="col-md-4 mb-3">
-                        <i class="fas fa-robot icon-feature mb-3"></i>
-                        <h5>AI-Powered</h5>
-                        <p class="text-muted">
-                            Uses advanced XGBoost machine learning algorithm trained on real dining data
-                        </p>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded" style="background: rgba(102, 126, 234, 0.1);">
+                            <i class="fas fa-percentage text-primary mb-2" style="font-size: 2rem;"></i>
+                            <h6>Standard Range</h6>
+                            <small class="text-muted">15-20% is typical for good service</small>
+                        </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <i class="fas fa-chart-line icon-feature mb-3"></i>
-                        <h5>Accurate Predictions</h5>
-                        <p class="text-muted">
-                            High accuracy based on multiple factors including bill amount, party size, and dining context
-                        </p>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded" style="background: rgba(40, 167, 69, 0.1);">
+                            <i class="fas fa-star text-success mb-2" style="font-size: 2rem;"></i>
+                            <h6>Excellent Service</h6>
+                            <small class="text-muted">20%+ for exceptional experiences</small>
+                        </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <i class="fas fa-lightning-bolt icon-feature mb-3"></i>
-                        <h5>Instant Results</h5>
-                        <p class="text-muted">
-                            Get your tip prediction in seconds with our optimized prediction engine
-                        </p>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded" style="background: rgba(255, 193, 7, 0.1);">
+                            <i class="fas fa-users text-warning mb-2" style="font-size: 2rem;"></i>
+                            <h6>Large Groups</h6>
+                            <small class="text-muted">Consider 18-20% for parties of 6+</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="p-3 rounded" style="background: rgba(220, 53, 69, 0.1);">
+                            <i class="fas fa-clock text-danger mb-2" style="font-size: 2rem;"></i>
+                            <h6>Special Occasions</h6>
+                            <small class="text-muted">Holidays and events may warrant higher tips</small>
+                        </div>
                     </div>
                 </div>
             </div>

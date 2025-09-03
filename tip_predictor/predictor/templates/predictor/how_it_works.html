@@ -1,0 +1,275 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}How It Works - TipAI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Header Section -->
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-4 text-white mb-3">
+            <i class="fas fa-cogs icon-feature"></i>
+            How TipAI Works
+        </h1>
+        <p class="lead text-white">
+            Discover the science and technology behind intelligent tip predictions
+        </p>
+    </div>
+</div>
+
+<!-- Process Overview -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="mb-0">
+                    <i class="fas fa-flow-chart me-2"></i>
+                    The Prediction Process
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-3 text-center p-4 border-end">
+                        <i class="fas fa-keyboard text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h5>1. Data Input</h5>
+                        <p class="text-muted small">User enters dining details through our intuitive form interface</p>
+                    </div>
+                    <div class="col-md-3 text-center p-4 border-end">
+                        <i class="fas fa-code text-success mb-3" style="font-size: 3rem;"></i>
+                        <h5>2. Data Processing</h5>
+                        <p class="text-muted small">Categorical variables are encoded using the same scheme as training data</p>
+                    </div>
+                    <div class="col-md-3 text-center p-4 border-end">
+                        <i class="fas fa-brain text-warning mb-3" style="font-size: 3rem;"></i>
+                        <h5>3. ML Prediction</h5>
+                        <p class="text-muted small">XGBoost model analyzes patterns and generates prediction</p>
+                    </div>
+                    <div class="col-md-3 text-center p-4">
+                        <i class="fas fa-star text-danger mb-3" style="font-size: 3rem;"></i>
+                        <h5>4. Result Display</h5>
+                        <p class="text-muted small">Prediction is formatted and displayed with confidence metrics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technical Deep Dive -->
+<div class="row g-4">
+    <!-- Machine Learning Algorithm -->
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h4 class="mb-0">
+                    <i class="fas fa-robot me-2"></i>
+                    XGBoost Algorithm
+                </h4>
+            </div>
+            <div class="card-body">
+                <p>Our tip predictor uses <strong>XGBoost (Extreme Gradient Boosting)</strong>, a state-of-the-art machine learning algorithm known for:</p>
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>High Accuracy:</strong> Superior performance on structured data
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Robustness:</strong> Handles missing values and outliers well
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Speed:</strong> Optimized for fast predictions
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Feature Importance:</strong> Understands which factors matter most
+                    </li>
+                </ul>
+                
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        XGBoost has won numerous machine learning competitions and is widely used in industry.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Data Features -->
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-database me-2"></i>
+                    Feature Engineering
+                </h4>
+            </div>
+            <div class="card-body">
+                <p>We carefully encode categorical variables to match the training data:</p>
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h6 class="text-primary">Encoding Scheme:</h6>
+                        <ul class="small">
+                            <li><strong>Sex:</strong> Male=1, Female=0</li>
+                            <li><strong>Smoker:</strong> Yes=1, No=0</li>
+                            <li><strong>Time:</strong> Lunch=1, Dinner=0</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <h6 class="text-success">Day Mapping:</h6>
+                        <ul class="small">
+                            <li>Friday = 0</li>
+                            <li>Saturday = 1</li>
+                            <li>Sunday = 2</li>
+                            <li>Thursday = 3</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-light mt-3">
+                    <small>
+                        <i class="fas fa-lightbulb text-warning me-1"></i>
+                        <strong>Why encoding matters:</strong> Machine learning models work with numbers, so we convert text categories to numerical values in a consistent way.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Training Data & Performance -->
+<div class="row mt-4 g-4">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Training Data & Performance
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Dataset Information</h5>
+                        <p>Our model is trained on the famous <strong>Tips Dataset</strong> from Seaborn, which contains:</p>
+                        <ul>
+                            <li>244 real restaurant transactions</li>
+                            <li>6 key features per transaction</li>
+                            <li>Diverse customer demographics</li>
+                            <li>Various dining scenarios</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Model Performance</h5>
+                        <p>Our XGBoost model demonstrates excellent performance:</p>
+                        <ul>
+                            <li><strong>High R² Score:</strong> Strong correlation with actual tips</li>
+                            <li><strong>Low MAE:</strong> Minimal average prediction error</li>
+                            <li><strong>Fast Inference:</strong> Predictions in milliseconds</li>
+                            <li><strong>Stable Results:</strong> Consistent across different scenarios</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-chart-line me-2"></i>
+                    <strong>Continuous Improvement:</strong> While our current model performs well, we're always looking to enhance accuracy with more diverse training data and advanced techniques.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-tools me-2"></i>
+                    Tech Stack
+                </h5>
+            </div>
+            <div class="card-body">
+                <h6>Backend</h6>
+                <ul class="list-unstyled small">
+                    <li><i class="fab fa-python text-primary me-2"></i> Python 3.8+</li>
+                    <li><i class="fas fa-server text-success me-2"></i> Django Framework</li>
+                    <li><i class="fas fa-brain text-warning me-2"></i> XGBoost ML</li>
+                    <li><i class="fas fa-cogs text-info me-2"></i> Scikit-learn</li>
+                </ul>
+                
+                <h6 class="mt-3">Frontend</h6>
+                <ul class="list-unstyled small">
+                    <li><i class="fab fa-bootstrap text-primary me-2"></i> Bootstrap 5</li>
+                    <li><i class="fab fa-js text-warning me-2"></i> JavaScript</li>
+                    <li><i class="fas fa-paint-brush text-danger me-2"></i> Custom CSS</li>
+                    <li><i class="fab fa-font-awesome text-info me-2"></i> Font Awesome</li>
+                </ul>
+                
+                <h6 class="mt-3">Data</h6>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-database text-secondary me-2"></i> SQLite</li>
+                    <li><i class="fas fa-file-csv text-success me-2"></i> CSV Processing</li>
+                    <li><i class="fas fa-save text-primary me-2"></i> Joblib Serialization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model Validation -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    Model Validation & Reliability
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-check-circle text-success mb-3" style="font-size: 3rem;"></i>
+                        <h5>Cross-Validation</h5>
+                        <p class="text-muted">Model tested on multiple data splits to ensure generalization</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-balance-scale text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h5>Bias Detection</h5>
+                        <p class="text-muted">Systematic checks for demographic and contextual biases</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-clock text-warning mb-3" style="font-size: 3rem;"></i>
+                        <h5>Performance Monitoring</h5>
+                        <p class="text-muted">Continuous monitoring of prediction accuracy and system performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="cta-section">
+            <h3 class="mb-4">Ready to Experience Smart Tip Predictions?</h3>
+            <p class="lead mb-4">
+                Now that you understand how our AI works, try it yourself!
+            </p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{% url 'predictor:predict' %}" class="btn btn-warning btn-lg px-4 py-3">
+                    <i class="fas fa-magic me-2"></i>
+                    Make a Prediction
+                </a>
+                <a href="{% url 'predictor:demo' %}" class="btn btn-outline-light btn-lg px-4 py-3">
+                    <i class="fas fa-play me-2"></i>
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -11,12 +11,29 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 80px; /* Account for fixed navbar */
         }
         
         .navbar {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link {
+            color: #495057 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+            border-radius: 20px;
+            padding: 8px 16px !important;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: #667eea !important;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
         }
         
         .card {
@@ -89,15 +106,57 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
+        .hero-section {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cta-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .stats-counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'predictor:home' %}">
-                <i class="fas fa-calculator text-primary"></i>
-                <strong>Tip Predictor</strong>
+            <a class="navbar-brand" href="{% url 'predictor:landing' %}">
+                <i class="fas fa-calculator text-primary me-2"></i>
+                <strong>TipAI</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -105,13 +164,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'predictor:home' %}">
-                            <i class="fas fa-home"></i> Home
+                        <a class="nav-link" href="{% url 'predictor:landing' %}">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'predictor:predict' %}">
+                            <i class="fas fa-magic me-1"></i> Predict
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'predictor:demo' %}">
+                            <i class="fas fa-play-circle me-1"></i> Demo
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'predictor:how_it_works' %}">
+                            <i class="fas fa-cogs me-1"></i> How It Works
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'predictor:about' %}">
-                            <i class="fas fa-info-circle"></i> About
+                            <i class="fas fa-info-circle me-1"></i> About
                         </a>
                     </li>
                 </ul>

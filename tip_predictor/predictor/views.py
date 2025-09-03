@@ -17,8 +17,12 @@ except Exception as e:
     print(f"Error loading model: {e}")
     model = None
 
-def home(request):
-    """Home page with tip prediction form"""
+def landing(request):
+    """Landing page with hero section and features"""
+    return render(request, 'predictor/landing.html')
+
+def predict(request):
+    """Prediction page with tip prediction form"""
     prediction = None
     
     if request.method == 'POST':
@@ -55,7 +59,11 @@ def home(request):
                 try:
                     prediction = model.predict(features)[0]
                     prediction = round(prediction, 2)
-                    messages.success(request, f'Prediction successful! Estimated tip: ${prediction}')
+                    
+                    # Calculate tip percentage
+                    tip_percentage = round((prediction / total_bill) * 100, 1)
+                    
+                    messages.success(request, f'Prediction successful! Estimated tip: ${prediction} ({tip_percentage}%)')
                 except Exception as e:
                     messages.error(request, f'Error making prediction: {e}')
             else:
@@ -68,8 +76,63 @@ def home(request):
         'prediction': prediction,
     }
     
-    return render(request, 'predictor/home.html', context)
+    return render(request, 'predictor/predict.html', context)
 
 def about(request):
     """About page with information about the tip predictor"""
     return render(request, 'predictor/about.html')
+
+def how_it_works(request):
+    """How it works page explaining the ML process"""
+    return render(request, 'predictor/how_it_works.html')
+
+def demo(request):
+    """Demo page with sample predictions"""
+    # Sample data for demonstration
+    sample_predictions = [
+        {
+            'scenario': 'Weekend Dinner for 4',
+            'details': {
+                'total_bill': 85.50,
+                'sex': 'Male',
+                'smoker': 'No',
+                'day': 'Sat',
+                'time': 'Dinner',
+                'size': 4
+            },
+            'predicted_tip': 12.75,
+            'tip_percentage': 14.9
+        },
+        {
+            'scenario': 'Weekday Lunch for 2',
+            'details': {
+                'total_bill': 32.40,
+                'sex': 'Female',
+                'smoker': 'No',
+                'day': 'Thur',
+                'time': 'Lunch',
+                'size': 2
+            },
+            'predicted_tip': 4.85,
+            'tip_percentage': 15.0
+        },
+        {
+            'scenario': 'Friday Night Out',
+            'details': {
+                'total_bill': 125.00,
+                'sex': 'Male',
+                'smoker': 'Yes',
+                'day': 'Fri',
+                'time': 'Dinner',
+                'size': 6
+            },
+            'predicted_tip': 18.20,
+            'tip_percentage': 14.6
+        }
+    ]
+    
+    context = {
+        'sample_predictions': sample_predictions,
+    }
+    
+    return render(request, 'predictor/demo.html', context)
