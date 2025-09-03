@@ -47,7 +47,8 @@ I have saved the model as `xgb_model.pkl` in the `model` directory.
 
 ```bash
 # starting the project in the same main folder
-django-admin startproject tip_predictor .
+django-admin startproject tip_predictor
+cd tip_predictor
 ```
 
 ## 5. create a django app
@@ -56,3 +57,36 @@ django-admin startproject tip_predictor .
 cd tip_predictor
 python manage.py startapp predictor
 ```
+
+
+## 6. add the app to settings.py
+add the app to the `INSTALLED_APPS` list in `settings.py`
+
+```python
+INSTALLED_APPS = [
+    ...
+    'predictor',
+]
+```
+
+## 7. create a form for user input
+create a file named `forms.py` in the `predictor` directory and add the following code:
+
+```python
+from django import forms
+class TipForm(forms.Form):
+    total_bill = forms.FloatField(label='Total Bill')
+    size = forms.IntegerField(label='Size of Party')
+    time = forms.ChoiceField(choices=[('Lunch', 'Lunch'), ('Dinner', 'Dinner')], label='Time of Day')
+    day = forms.ChoiceField(choices=[('Thur', 'Thursday'), ('Fri', 'Friday'), ('Sat', 'Saturday'), ('Sun', 'Sunday')], label='Day of the Week )
+    smoker = forms.ChoiceField(choices=[('Yes', 'Yes'), ('No', 'No')], label='Smoker')
+    sex = forms.ChoiceField(choices=[('male'),('female')], label='Sex')
+```
+
+
+
+
+
+
+
+
