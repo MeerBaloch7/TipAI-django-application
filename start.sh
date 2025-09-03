@@ -1,19 +1,26 @@
 #!/bin/bash
 
-# Railway deployment script for TipAI
-echo "🚂 Starting Railway deployment for TipAI..."
+# Railway deployment script for Django tip predictor
 
-# Navigate to Django project
-cd tip_predictor
+set -e  # Exit on any error
 
-# Run migrations
-echo "📊 Running database migrations..."
+echo "Starting Railway deployment..."
+
+# Change to the Django project directory
+cd /app/tip_predictor
+
+# Create staticfiles directory if it doesn't exist
+mkdir -p /app/staticfiles
+mkdir -p /app/media
+
+# Run database migrations
+echo "Running database migrations..."
 python manage.py migrate --noinput
 
 # Collect static files
-echo "📁 Collecting static files..."
+echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Start the server
-echo "🚀 Starting Django server..."
-python manage.py runserver 0.0.0.0:$PORT
+# Start the Django application with Gunicorn
+echo "Starting Django application..."
+exec gunicorn --bind 0.0.0.0:$PORT --workers 3 tip_predictor.wsgi:application

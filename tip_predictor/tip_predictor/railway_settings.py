@@ -29,7 +29,15 @@ if 'DATABASE_URL' in os.environ:
 
 # Static files configuration
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/app/staticfiles'  # Use absolute path for Railway container
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/app/media'
+
+# Add WhiteNoise for static files serving
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Railway static files handling
 if 'RAILWAY_STATIC_URL' in os.environ:
