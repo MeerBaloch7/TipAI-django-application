@@ -6,9 +6,3 @@ numpy==2.1.0
 pandas==2.2.2
 matplotlib==3.9.2
 seaborn==0.13.2
-
-# Production dependencies
-whitenoise==6.6.0
-gunicorn==21.2.0
-dj-database-url==2.1.0
-psycopg2-binary==2.9.9
