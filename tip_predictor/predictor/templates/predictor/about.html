@@ -1,0 +1,112 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}About - Tip Predictor{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h2 class="mb-0">
+                    <i class="fas fa-info-circle"></i>
+                    About Tip Predictor
+                </h2>
+            </div>
+            <div class="card-body p-5">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="mb-4">How It Works</h3>
+                        <p class="lead">
+                            Our Tip Predictor uses a sophisticated XGBoost machine learning model trained on real restaurant data to provide accurate tip predictions.
+                        </p>
+                        
+                        <h4 class="mt-4 mb-3">Model Features</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Total Bill Amount:</strong> The primary factor influencing tip amount
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Party Size:</strong> Number of people dining together
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Gender:</strong> Customer demographic information
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Smoking Status:</strong> Whether the customer smokes
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Day of Week:</strong> Dining patterns vary by day
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Time of Day:</strong> Lunch vs. dinner service differences
+                            </li>
+                        </ul>
+
+                        <h4 class="mt-4 mb-3">Technology Stack</h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fab fa-python text-primary"></i> Python</li>
+                                    <li><i class="fas fa-cogs text-primary"></i> Django Framework</li>
+                                    <li><i class="fas fa-brain text-primary"></i> XGBoost ML</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fab fa-bootstrap text-primary"></i> Bootstrap CSS</li>
+                                    <li><i class="fas fa-chart-bar text-primary"></i> Scikit-learn</li>
+                                    <li><i class="fas fa-database text-primary"></i> SQLite</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-pie icon-feature mb-3"></i>
+                                <h5>Model Performance</h5>
+                                <p class="text-muted">
+                                    Our XGBoost model achieves high accuracy in predicting tip amounts based on comprehensive feature analysis.
+                                </p>
+                                
+                                <div class="mt-4">
+                                    <h6>Key Metrics:</h6>
+                                    <small class="text-muted">
+                                        • Low Mean Absolute Error<br>
+                                        • High R² Score<br>
+                                        • Robust Predictions
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-primary text-white mt-3">
+                            <div class="card-body text-center">
+                                <i class="fas fa-lightbulb mb-3" style="font-size: 2rem;"></i>
+                                <h6>Pro Tip</h6>
+                                <small>
+                                    The model considers multiple factors to provide the most accurate prediction possible for your specific dining scenario.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="my-5">
+                
+                <div class="text-center">
+                    <h4>Ready to Try It?</h4>
+                    <p class="text-muted mb-4">
+                        Enter your dining details and get an instant tip prediction!
+                    </p>
+                    <a href="{% url 'predictor:home' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-calculator"></i>
+                        Start Predicting
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
