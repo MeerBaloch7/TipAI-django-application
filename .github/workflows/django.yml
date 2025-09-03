@@ -1,0 +1,186 @@
+name: TipAI Django CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run Django migrations
+      run: |
+        cd tip_predictor
+        python manage.py migrate
+    
+    - name: Run Django tests
+      run: |
+        cd tip_predictor
+        python manage.py test
+    
+    - name: Check Django deployment readiness
+      run: |
+        cd tip_predictor
+        python manage.py check --deploy
+    
+    - name: Collect static files
+      run: |
+        cd tip_predictor
+        python manage.py collectstatic --noinput
+  
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install security tools
+      run: |
+        pip install bandit safety
+    
+    - name: Run security checks with bandit
+      run: |
+        bandit -r tip_predictor/ -f json -o bandit-report.json || true
+    
+    - name: Check for known security vulnerabilities
+      run: |
+        safety check --json --output safety-report.json || true
+    
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install linting tools
+      run: |
+        pip install flake8 black isort
+    
+    - name: Run flake8
+      run: |
+        flake8 tip_predictor/ --count --select=E9,F63,F7,F82 --show-source --statistics
+    
+    - name: Check code formatting with black
+      run: |
+        black --check tip_predictor/
+    
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only tip_predictor/
+
+  model-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Validate ML model
+      run: |
+        python -c "
+        import joblib
+        import os
+        
+        # Check if model file exists
+        model_path = 'ml_project/model/xgb_model.pkl'
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f'Model file not found: {model_path}')
+        
+        # Load and test model
+        model = joblib.load(model_path)
+        print(f'Model loaded successfully: {type(model)}')
+        
+        # Test prediction with sample data
+        import numpy as np
+        test_features = np.array([[32.83, 1, 0, 3, 0, 3]])
+        prediction = model.predict(test_features)
+        print(f'Test prediction: {prediction[0]}')
+        
+        if prediction[0] <= 0:
+            raise ValueError('Model prediction should be positive')
+        
+        print('Model validation successful!')
+        "
+
+  deploy-staging:
+    needs: [test, security, lint, model-validation]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Deploy to staging
+      run: |
+        echo "Deploying to staging environment..."
+        # Add your staging deployment steps here
+
+  deploy-production:
+    needs: [test, security, lint, model-validation]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Deploy to production
+      run: |
+        echo "Deploying to production environment..."
+        # Add your production deployment steps here
+        # Example for Heroku:
+        # - name: Deploy to Heroku
+        #   uses: akhileshns/heroku-deploy@v3.12.12
+        #   with:
+        #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        #     heroku_app_name: "your-app-name"
+        #     heroku_email: "your-email@example.com"
